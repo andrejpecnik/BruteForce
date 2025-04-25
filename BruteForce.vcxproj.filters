@@ -36,7 +36,4 @@
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <None Include=".gitignor" />
-  </ItemGroup>
 </Project>

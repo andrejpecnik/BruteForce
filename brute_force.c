@@ -5,10 +5,12 @@
 #include "xor.h"
 #include "config.h"
 
-int brute_force_attack(const unsigned char* data, size_t data_len, unsigned char* found_key,
+size_t brute_force_attack(const unsigned char* data, size_t data_len, unsigned char* found_key,
     int min_len, int max_len, const char* known_phrase, size_t expected_key_len) {
+
     const char charset[] = "abcdefghijklmnopqrstuvwxyz0123456789";
     size_t charset_len = strlen(charset);
+    size_t attempts = 0;
 
     unsigned char* decrypted = malloc(MAX_FILE_SIZE);
     if (!decrypted) {
@@ -28,6 +30,8 @@ int brute_force_attack(const unsigned char* data, size_t data_len, unsigned char
         }
 
         for (size_t i = 0; i < total; i++) {
+            attempts++;
+
             size_t idx = i;
             for (int j = 0; j < key_len; j++) {
                 current_key[j] = charset[idx % charset_len];
@@ -38,14 +42,14 @@ int brute_force_attack(const unsigned char* data, size_t data_len, unsigned char
             xor_encrypt(data, decrypted, data_len, (unsigned char*)current_key, key_len);
             decrypted[data_len < MAX_FILE_SIZE ? data_len : MAX_FILE_SIZE - 1] = '\0';
 
-            // Kontrola: zaèína "HEADER:" a obsahuje known_phrase
             if (key_len == expected_key_len &&
                 memcmp(decrypted, "HEADER:", 7) == 0 &&
                 strstr((char*)decrypted, known_phrase)) {
+
                 strcpy_s((char*)found_key, MAX_KEY_LENGTH + 1, current_key);
                 free(current_key);
                 free(decrypted);
-                return 1;
+                return attempts;
             }
         }
 

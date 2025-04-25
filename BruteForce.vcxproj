@@ -141,9 +141,6 @@
     <ClInclude Include="config.h" />
     <ClInclude Include="xor.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include=".gitignor" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

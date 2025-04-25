@@ -41,41 +41,37 @@ int main() {
     unsigned char encrypted[MAX_FILE_SIZE];
     unsigned char found_key[MAX_KEY_LENGTH + 1];
 
-    // Naèítanie názvu súboru
     printf("Enter path to file to encrypt:\n> ");
     fgets(file_name, sizeof(file_name), stdin);
     file_name[strcspn(file_name, "\n")] = '\0';
 
-    // Naèítanie k¾úèa
     printf("Enter encryption key (max %d characters):\n> ", MAX_KEY_LENGTH);
     fgets(key, sizeof(key), stdin);
     key[strcspn(key, "\n")] = '\0';
     size_t key_len = strlen(key);
 
-    // Naèítanie známej frázy
     printf("Enter known phrase to search for in decrypted text:\n> ");
     fgets(known_phrase, sizeof(known_phrase), stdin);
     known_phrase[strcspn(known_phrase, "\n")] = '\0';
 
-    // Èítanie vstupného súboru
     if (!read_file(file_name, buffer, &file_len)) {
         fprintf(stderr, "Failed to read file: %s\n", file_name);
         return 1;
     }
 
-    // Šifrovanie
     xor_encrypt(buffer, encrypted, file_len, (unsigned char*)key, key_len);
     write_file("encrypted.bin", encrypted, file_len);
     printf("File encrypted to 'encrypted.bin'\n");
 
-    // Brute-force útok (od 3 po MAX_KEY_LENGTH)
     clock_t start = clock();
-    int success = brute_force_attack(encrypted, file_len, found_key, 3, MAX_KEY_LENGTH, known_phrase, key_len);
+    size_t attempts = brute_force_attack(encrypted, file_len, found_key, 3, MAX_KEY_LENGTH, known_phrase, key_len);
     clock_t end = clock();
     double duration = (double)(end - start) / CLOCKS_PER_SEC;
 
-    if (success) {
+    if (attempts > 0) {
         printf("Key found: '%s'\n", found_key);
+        printf("Found after %zu attempts.\n", attempts);
+
         unsigned char decrypted[MAX_FILE_SIZE];
         xor_encrypt(encrypted, decrypted, file_len, found_key, strlen((char*)found_key));
         write_file("decrypted.txt", decrypted, file_len);
