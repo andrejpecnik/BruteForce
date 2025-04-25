@@ -1,1 +1,32 @@
+# Build výstupy
+*.obj
+*.exe
+*.dll
+*.pdb
+*.idb
+*.ilk
+*.log
+
+# Debug priečinky
+Debug/
+x64/
+*.ipch
+*.aps
+
+# Visual Studio
 .vs/
+*.suo
+*.user
+*.userosscache
+*.sdf
+*.cache
+*.VC.db
+*.VC.opendb
+
+# Binárky a výstupy
+*.bin
+*.txt
+
+# Iné
+*.zip
+*.tar.gz
