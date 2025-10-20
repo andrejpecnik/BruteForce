@@ -23,3 +23,8 @@ Release/
 
 # Ostatné nepotrebné veci
 *.vsidx
+
+
+**/Debug/
+**/Release/
+**/x64/
