@@ -18,10 +18,7 @@
     <ClCompile Include="brute_force.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="test_xor.c">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="test_brute_force.c">
+    <ClCompile Include="test_project.c">
       <Filter>tests</Filter>
     </ClCompile>
   </ItemGroup>

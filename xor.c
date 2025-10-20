@@ -1,9 +1,10 @@
-#include "xor.h"
+﻿#include "xor.h"
 
 #include "config.h"
 
 
 void xor_encrypt(const unsigned char* input, unsigned char* output, size_t len, const unsigned char* key, size_t key_len) {
+    // Každý byte vstupu XORujeme s príslušným bytom kľúča (cyklicky podľa dĺžky kľúča)
     for (size_t i = 0; i < len; ++i) {
         output[i] = input[i] ^ key[i % key_len];
     }

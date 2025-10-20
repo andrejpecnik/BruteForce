@@ -1,32 +1,25 @@
-# Build výstupy
-*.obj
+# Visual Studio cache
+.vs/
+*.vcxproj.user
+*.suo
+
+# Build output
 *.exe
-*.dll
+*.obj
 *.pdb
-*.idb
 *.ilk
 *.log
-
-# Debug priečinky
-Debug/
+*.tmp
 x64/
-*.ipch
-*.aps
+Debug/
+Release/
 
-# Visual Studio
-.vs/
-*.suo
-*.user
-*.userosscache
-*.sdf
-*.cache
-*.VC.db
-*.VC.opendb
-
-# Binárky a výstupy
+# Binárne a šifrované súbory
 *.bin
-*.txt
 
-# Iné
-*.zip
-*.tar.gz
+# Dočasné súbory
+~$*
+*.cache
+
+# Ostatné nepotrebné veci
+*.vsidx

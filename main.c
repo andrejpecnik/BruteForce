@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -6,6 +6,16 @@
 #include "xor.h"
 #include "brute_force.h"
 #include "config.h"
+
+/**
+ * Načíta obsah súboru do bufferu.
+ *
+ * @param filename Názov súboru na načítanie.
+ * @param buffer Buffer na uloženie obsahu súboru.
+ * @param length Ukazovateľ na premennú, kde sa uloží veľkosť súboru.
+ *
+ * @return 1 ak sa podarilo načítať, 0 pri chybe.
+ */
 
 int read_file(const char* filename, unsigned char* buffer, size_t* length) {
     FILE* file = fopen(filename, "rb");
@@ -19,6 +29,16 @@ int read_file(const char* filename, unsigned char* buffer, size_t* length) {
     return 1;
 }
 
+/**
+ * Zapíše obsah bufferu do súboru.
+ *
+ * @param filename Názov súboru na zápis.
+ * @param data Buffer obsahujúci dáta na zápis.
+ * @param length Počet bajtov na zápis.
+ *
+ * @return 1 ak sa podarilo zapísať, 0 pri chybe.
+ */
+
 int write_file(const char* filename, const unsigned char* data, size_t length) {
     FILE* file = fopen(filename, "wb");
     if (!file) {
@@ -30,6 +50,14 @@ int write_file(const char* filename, const unsigned char* data, size_t length) {
     fclose(file);
     return 1;
 }
+
+/**
+ * Hlavná funkcia programu:
+ * - Načíta súbor.
+ * - Zašifruje ho pomocou XOR kľúča.
+ * - Pokúsi sa brute-force útokom nájsť kľúč.
+ * - Dešifruje obsah súboru späť, ak sa nájde správny kľúč.
+ */
 
 int main() {
     char file_name[256];

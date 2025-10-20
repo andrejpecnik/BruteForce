@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "brute_force.h"
@@ -28,7 +28,7 @@ size_t brute_force_attack(const unsigned char* data, size_t data_len, unsigned c
             free(decrypted);
             return 0;
         }
-
+        // Vygenerovanie aktuálneho kľúča podľa indexu i
         for (size_t i = 0; i < total; i++) {
             attempts++;
 
@@ -39,9 +39,17 @@ size_t brute_force_attack(const unsigned char* data, size_t data_len, unsigned c
             }
             current_key[key_len] = '\0';
 
+            // XOR dešifrovanie dát
             xor_encrypt(data, decrypted, data_len, (unsigned char*)current_key, key_len);
-            decrypted[data_len < MAX_FILE_SIZE ? data_len : MAX_FILE_SIZE - 1] = '\0';
 
+            if (data_len < MAX_FILE_SIZE) {
+                decrypted[data_len] = '\0';  // ukončíme správne za dátami
+            }
+            else {
+                decrypted[MAX_FILE_SIZE - 1] = '\0';  // keby bol veľký súbor
+            }
+
+            // Skontrolovanie dešifrovaného textu
             if (key_len == expected_key_len &&
                 memcmp(decrypted, "HEADER:", 7) == 0 &&
                 strstr((char*)decrypted, known_phrase)) {
